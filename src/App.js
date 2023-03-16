@@ -14,20 +14,34 @@ function App() {
   const [level,setLevel] = useState("easy")
 
 
-  const [points,setPoints] = useState([1,2])
+  // const [points,setPoints] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 22,
+  //   13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+  //   25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 46,
+  //   37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
+  //   49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 69, 61,
+  //   62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73,
+  //   74, 75, 76, 77, 78, 79, 80, 81, 92, 84, 85, 86,
+  //   87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+  //   99, 100, ])
+  const [points,setPoints] = useState([1, 2])
+
   const [direction,setDirection] = useState("ArrowRight")
   const [toggle,setToggle] = useState(false)
-
+  
   const [food,setFood] = useState(randomIntFromInterval((12 + 1), (12 * 12)))
+ 
+  // const [food,setFood] = useState(randomIntFromInterval((12 + 1), (12 * 12)))
 
   function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
  
   
- const setFoodFunc = () => {
+ const setFoodFunc = (points) => {
   let newFood = randomIntFromInterval(1, (12 * 12));
+
     while(points.includes(newFood)) {
+ 
       newFood = randomIntFromInterval(1, (12 * 12))
     } 
 
@@ -38,13 +52,19 @@ function App() {
   useEffect(() => {
    
     const intervalId = setInterval(() => {
+      if(gameOver){
+return
+      }
       setPoints(prevPoints => {
       
         const newPoints = [...prevPoints];
   
 let newPoint;
        
-        if(direction == "ArrowRight") {      
+        if(direction == "ArrowRight") { 
+          if( ((newPoints[newPoints.length - 1] - newPoints[newPoints.length - 2]) < 0) &&  ((newPoints[newPoints.length - 1] - newPoints[newPoints.length - 2]) > -6) ) {
+return newPoints
+          }     
           newPoint = newPoints[newPoints.length - 1] + 1
           if((newPoint % 12) == 1){
            newPoint = newPoint - 12;
@@ -52,7 +72,12 @@ let newPoint;
           
         
         }
-        if(direction == "ArrowLeft") {                                                                                 
+        if(direction == "ArrowLeft") {  
+          
+          if( ((newPoints[newPoints.length - 2] - newPoints[newPoints.length - 1]) < 0) &&  ((newPoints[newPoints.length - 2] - newPoints[newPoints.length - 1]) > -6) ) {
+            return newPoints
+              } 
+
           newPoint = newPoints[newPoints.length - 1] - 1 
       
           if((newPoint % 12) == 0){
@@ -62,6 +87,11 @@ let newPoint;
         
         }
         if(direction == "ArrowDown") {
+          if( ((newPoints[newPoints.length - 1] - newPoints[newPoints.length - 2]) < 0) 
+          && ((newPoints[newPoints.length - 1] - newPoints[newPoints.length - 2]) > 6) 
+          ) {
+            return newPoints
+                      }  
            newPoint = newPoints[newPoints.length - 1] + 12 
            if(newPoint > (12 * 12)){
             newPoint = newPoint%12;
@@ -71,6 +101,12 @@ let newPoint;
        
         }
         if(direction == "ArrowUp") {
+          if( ((newPoints[newPoints.length - 2] - newPoints[newPoints.length - 1]) < 0)
+          && ((newPoints[newPoints.length - 2] - newPoints[newPoints.length - 1]) > 6)
+          ) {
+            return newPoints
+              } 
+
           newPoint = newPoints[newPoints.length - 1] - 12 
            if(newPoint < (0)){
             newPoint = (12*12) + (newPoint%12);
@@ -83,15 +119,17 @@ let newPoint;
     
         
 
+       
+       if(prevPoints.includes(newPoint)){
+       
+          setGameOver(true)
+        }
+
         if(newPoint == food) {
           setScore(prevScore => {
             return prevScore+ 1;
           })
-          setFoodFunc()
-        }
-       else if(prevPoints.includes(newPoint)){
-          console.log("final",newPoint,newPoints)
-          setGameOver(true)
+          setFoodFunc(newPoints)
         }
         else {
           newPoints.shift()
@@ -101,7 +139,7 @@ let newPoint;
 
         newPoints.push(newPoint)
       
-        console.log(newPoints)
+        
         return newPoints;
       });
     }, (
