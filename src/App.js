@@ -199,8 +199,8 @@ level == "easy"?300:(
       <h1>
         Snake Game
       </h1>
-     <div className='row'>
-
+     <div className='row' >
+     <div className='row' style={{"border":"1px solid red"}}>
 {
   gameOver?(<div>
 <h1>Game Over</h1>
@@ -213,23 +213,27 @@ level == "easy"?300:(
 itemList.map((el,index) => {
   
 
-  return (<div className={`col-1 ${points.includes(el)?"bg-danger text-danger":"bg-white text-white"} `}>
+  return (
+  
+  <div className={`col-1 ${points.includes(el)?"bg-danger text-danger":"bg-white text-white"} `}>
     <span className={` ${(el==(points[points.length - 1] ))?"text-success bg-success":
    ( (food == el)?"bg-warning text-warning":"")
     } `}>
     O
     </span>
     
-  </div>)
+  </div>
+ 
+)
 })
   )
 }
-
+</div>
 <h1>Score:{score}</h1>
 
 <div className="row">
-  <div className='col-4 offset-4'>
-    <div className='row'>
+  <div className='col-2 offset-5'>
+    <div className='row m-0'>
     <div className=" col-4">
   
   </div>
