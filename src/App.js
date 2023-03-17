@@ -227,6 +227,80 @@ itemList.map((el,index) => {
 
 <h1>Score:{score}</h1>
 
+<div className="row">
+  <div className='col-4 offset-4'>
+    <div className='row'>
+    <div className=" col-md-4">
+  
+  </div>
+    <div className=" col-md-4">
+    <button type="button" className="btn btn-outline-secondary btn-lg d-block"
+    onClick={() => {
+      if(direction == "ArrowLeft" || direction == "ArrowRight" ){
+        setDirection("ArrowUp")
+       }
+    }}
+    ><i className="fa fa-arrow-up" /></button>
+  </div>
+  <div className=" col-md-4">
+  
+  </div>
+ 
+
+
+  <div className=" col-md-4">
+  <button type="button" className="btn btn-outline-secondary btn-lg"
+     onClick={() => {
+       if(direction == "ArrowUp" || direction == "ArrowDown" ){
+        
+        setDirection("ArrowLeft")
+       }
+    }}
+    ><i className="fa fa-arrow-left" /></button>
+  </div>
+  <div className=" col-md-4">
+  
+  </div>
+  <div className=" col-md-4">
+  <button type="button" className="btn btn-outline-secondary btn-lg" 
+    onClick={() => {
+      if(direction == "ArrowUp" || direction == "ArrowDown" ){
+       
+       setDirection("ArrowRight")
+      }
+   }}
+    
+    ><i className="fa fa-arrow-right" /></button>
+  </div>
+
+  <div className=" col-md-4">
+  
+  </div>
+  <div className=" col-md-4">
+  <button type="button" className="btn btn-outline-secondary btn-lg"
+
+onClick={() => {
+ if(direction == "ArrowLeft" || direction == "ArrowRight" ){
+   setDirection("ArrowDown")
+  }
+  
+}}
+
+><i className="fa fa-arrow-down" /></button>
+  </div>
+  <div className=" col-md-4">
+  
+  </div>
+    </div>
+  </div>
+
+
+ 
+
+</div>
+
+
+
 <div className='row'>
 <div className='col-4'>
 
